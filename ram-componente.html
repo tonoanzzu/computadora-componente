@@ -1,0 +1,38 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="ram-componente">
+    <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+    <script>
+        /**
+         * `ram-componente`
+         * simulacion de computadora y sus componentes
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class RamComponente extends Polymer.Element {
+            static get is() {
+                return 'ram-componente';
+            }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'ram-componente'
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(RamComponente.is, RamComponente);
+    </script>
+</dom-module>

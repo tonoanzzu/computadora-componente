@@ -1,0 +1,85 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="procesador-componente">
+    <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+<!-- <div>
+    <h3>Ram</h3>
+    <p>Nombre: {{ram.name}}</p>
+    <p>Arquitectura: {{ram.architecture}}</p>
+  </div> -->
+
+  <template is="dom-if" if="[[!estado]]">
+      <h2>En este momento tu equipo esta apagado.</h2>
+      <template is="dom-repeat" items="{{listaProcesadores}}">
+      
+          <p>Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </p>
+        </template>
+
+    </template>
+
+    <template is="dom-if" if="[[estado]]">
+        <h2>En este momento tu equipo esta apagado.</h2>
+      </template>
+
+    </template>
+
+    <script>
+        /**
+         * `procesador-componente`
+         * simulacion de computadora y sus componentes
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class ProcesadorComponente extends Polymer.Element {
+            static get is() {
+                return 'procesador-componente';
+            }
+            static get properties() {
+                return {
+                    procesador: {
+                        type: Object,
+                        value: {},
+                        notify: true
+                    },
+                    estado: {
+                        type: Boolean,
+
+                    },
+                    listaProcesadores: {
+                        type: Array,
+                        value: []
+                    }
+
+                };
+            }
+
+
+            connectedCallback() {
+                super.connectedCallback();
+                this._getAPIInformation();
+            }
+            _getAPIInformation() {
+                let request = new XMLHttpRequest();
+                let url = "http://demo6292426.mockable.io/processors";
+                request.open('GET', url);
+                request.send();
+                request.onreadystatechange = () => {
+                    if (request.readyState === 4) {
+                        console.log(JSON.parse(request.response));
+                        this.listaProcesadores = JSON.parse(request.response).data;
+                    }
+                }
+            }
+        }
+
+        window.customElements.define(ProcesadorComponente.is, ProcesadorComponente);
+    </script>
+</dom-module>

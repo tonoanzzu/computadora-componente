@@ -1,36 +1,181 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="./procesador-componente.html">
+<link rel="import" href="./ram-componente.html">
+<link rel="import" href="./hdd-componente.html">
+<link rel="import" href="./graphic-card-componente.html">
 
 <dom-module id="computadora-componente">
-  <template>
+    <template>
     <style>
       :host {
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
-  </template>
 
-  <script>
-    /**
-     * `computadora-componente`
-     * simulacion de computadora y sus componentes
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class ComputadoraComponente extends Polymer.Element {
-      static get is() { return 'computadora-componente'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'computadora-componente'
-          }
-        };
-      }
-    }
+    <h2>Hola, bienvenido a tu equipo ACME!</h2>
 
-    window.customElements.define(ComputadoraComponente.is, ComputadoraComponente);
-  </script>
+    <button on-click="_handleClickOn">Encender</button> <button on-click="_handleClickOff">Apagar</button>
+
+
+    <template is="dom-if" if="[[!estado]]">
+      <h2>En este momento tu equipo esta apagado.</h2>
+      <procesador-componente procesador = "{{procesador}}" estado = "{{estado}}"></procesador-componente>
+      
+    </template>
+
+    <template is="dom-if" if="[[estado]]">
+      <h2>En este momento tu equipo esta prendido!</h2>
+
+      <h2>Cuenta con las siguientes caracteristicas:</h2>
+
+
+      <!-- <div>
+          <h3>Ram</h3>
+          <p>Nombre: {{ram.name}}</p>
+          <p>Arquitectura: {{ram.architecture}}</p>
+        </div>
+
+      <div>
+          <h3>HDD</h3>
+          <p>Proveedor: {{hdd.provider}}</p>
+          <p>Tamaño: {{hdd.size}}</p>                          
+        </div>
+
+
+        <div>
+            <h3>Tarjeta Grafica</h3>
+            <p>Nombre: {{graphicCard.name}}</p>
+            <p>Arquitectura: {{graphicCard.architecture}}</p>
+            <p>Ram: {{graphicCard.ramMemory}}</p>    
+          </div>
+ -->
+
+    </template>
+
+
+    </template>
+
+    <script>
+        /**
+         * `computadora-componente`
+         * simulacion de computadora y sus componentes
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class ComputadoraComponente extends Polymer.Element {
+            static get is() {
+                return 'computadora-componente';
+            }
+            static get properties() {
+                return {
+
+                    estado: {
+                        type: Boolean,
+                        value: false,
+                        reflectToAttribute: true
+                    },
+                    procesador: {
+                        type: Object,
+                        value: {
+                            "overclock": false,
+                            "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                            "cores": 4,
+                            "price": "4337.79",
+                            "architecture": "32bit",
+                            "provider": "intel-GFT",
+                            "ramMaxMemory": "126GB",
+                            "serial": 3789,
+                            "name": "core-amd-3789-ryzen-GFT"
+                        },
+                        reflectToAttribute: true
+                    },
+                    ram: {
+                        type: Object,
+                        value: {
+                            "speed": "1600Mhz",
+                            "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                            "price": "2441.74",
+                            "architecture": "gigabite-GFT",
+                            "ramMemory": "4GB",
+                            "serial": 377,
+                            "name": "ram-gigabite-377-Simple-GFT"
+                        }
+                    },
+                    hdd: {
+                        type: Object,
+                        value: {
+                            "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                            "size": "256GB",
+                            "price": "3615.35",
+                            "speed": "ssd",
+                            "provider": "seagate-GFT",
+                            "serial": 3238
+                        }
+                    },
+                    graphicCard: {
+                        type: Object,
+                        value: {
+                            "overclock": true,
+                            "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                            "price": "3966.13",
+                            "architecture": "nvidia-GFT",
+                            "ramMemory": "16GB",
+                            "serial": 1057,
+                            "name": "card-nvidia-1057-GFT"
+                        }
+
+                    }
+
+
+
+                };
+            }
+
+            static get observers() {
+                return ['_observaGlobal(procesador)']
+            }
+
+            _observaGlobal(procesador) {
+
+                this.set('procesador', procesador)
+            }
+
+            _handleClickOn() {
+
+                //this.estado = true
+                this.set('estado', true)
+
+            }
+
+            _handleClickOff() {
+
+                //this.estado = false
+                this.set('estado', false)
+
+            }
+
+            _handleClickOff() {
+
+                    //this.estado = false
+                    this.set('estado', false)
+
+                }
+                /* _getAPIInformation() {
+                    let request = new XMLHttpRequest();
+                    let url = "https://demo6292426.mockable.io/hddList";
+                    request.open('GET', url);
+                    request.send();
+                    request.onreadystatechange = () => {
+                        if (request.readyState === 4) {
+                            console.log(JSON.parse(request.response));
+                            this.listaProcesadores = JSON.parse(request.response).data;
+                        }
+                    }
+                } */
+        }
+
+        window.customElements.define(ComputadoraComponente.is, ComputadoraComponente);
+    </script>
 </dom-module>

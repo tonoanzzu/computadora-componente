@@ -1,0 +1,38 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="graphic-card-componente">
+    <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+    <script>
+        /**
+         * `graphic-card-componente`
+         * simulacion de computadora y sus componentes
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class GraphicCardComponente extends Polymer.Element {
+            static get is() {
+                return 'graphic-card-componente';
+            }
+            static get properties() {
+                return {
+                    prop1: {
+                        type: String,
+                        value: 'graphic-card-componente'
+                    }
+                };
+            }
+        }
+
+        window.customElements.define(GraphicCardComponente.is, GraphicCardComponente);
+    </script>
+</dom-module>
