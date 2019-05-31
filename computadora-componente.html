@@ -1,0 +1,36 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<dom-module id="computadora-componente">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]!</h2>
+  </template>
+
+  <script>
+    /**
+     * `computadora-componente`
+     * simulacion de computadora y sus componentes
+     *
+     * @customElement
+     * @polymer
+     * @demo demo/index.html
+     */
+    class ComputadoraComponente extends Polymer.Element {
+      static get is() { return 'computadora-componente'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'computadora-componente'
+          }
+        };
+      }
+    }
+
+    window.customElements.define(ComputadoraComponente.is, ComputadoraComponente);
+  </script>
+</dom-module>
