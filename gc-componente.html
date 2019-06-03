@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 
-<dom-module id="ram-componente">
+<dom-module id="gc-componente">
     <template>
     <style>
       :host {
@@ -10,11 +10,11 @@
 
 
   <template is="dom-if" if="[[!estado]]">
-      <h2>Puedes actulaizar tu Ram a los siguientes:</h2>
+      <h2>Puedes actulaizar tu Tarjeta Grafica a los siguientes:</h2>
       
-      <template is="dom-repeat" items="{{listaRams}}">
+      <template is="dom-repeat" items="{{listagcs}}">
       
-          <button  on-click="actualizaRam" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button>
+          <button  on-click="actualizagc" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  } </button>
 
         </template>
 
@@ -24,20 +24,20 @@
 
     <script>
         /**
-         * `ram-componente`
+         * `gc-componente`
          * simulacion de computadora y sus componentes
          *
          * @customElement
          * @polymer
          * @demo demo/index.html
          */
-        class RamComponente extends Polymer.Element {
+        class GraphicCardComponente extends Polymer.Element {
             static get is() {
-                return 'ram-componente';
+                return 'gc-componente';
             }
             static get properties() {
                 return {
-                    ram: {
+                    gc: {
                         type: Object,
                         value: {},
                         notify: true
@@ -46,7 +46,7 @@
                         type: Boolean,
 
                     },
-                    listaRams: {
+                    listagcs: {
                         type: Array,
                         value: []
                     }
@@ -54,10 +54,10 @@
                 };
             }
 
-            actualizaRam(e) {
+            actualizaTargetaGrafica(e) {
                 console.log('Ow!');
                 console.log(e.model.item);
-                this.ram = e.model.item
+                this.gc = e.model.item
                     // now you got args you can use them as you want
             }
 
@@ -68,18 +68,18 @@
 
             _getAPIInformation() {
                 let request = new XMLHttpRequest();
-                let url = "http://demo6292426.mockable.io/ramMemory";
+                let url = "http://demo6292426.mockable.io/graphicCard";
                 request.open('GET', url);
                 request.send();
                 request.onreadystatechange = () => {
                     if (request.readyState === 4) {
                         console.log(JSON.parse(request.response));
-                        this.listaRams = JSON.parse(request.response).data;
+                        this.listagcs = JSON.parse(request.response).data;
                     }
                 }
             }
         }
 
-        window.customElements.define(RamComponente.is, RamComponente);
+        window.customElements.define(GraphicCardComponente.is, GraphicCardComponente);
     </script>
 </dom-module>

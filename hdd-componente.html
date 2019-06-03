@@ -7,12 +7,24 @@
         display: block;
       }
     </style>
-    <h2>Hello [[prop1]]!</h2>
-  </template>
+
+
+  <template is="dom-if" if="[[!estado]]">
+      <h2>Puedes actulaizar tu Hdd a los siguientes:</h2>
+      
+      <template is="dom-repeat" items="{{listaHdds}}">
+      
+          <button  on-click="actualizaHdd" data-args="[[index]]" >Elemento [[index]]: { Proveedor: [[item.provider]] , Tamaño: [[item.size]]  , Velocidad: [[item.size]] } </button>
+
+        </template>
+
+    </template>
+
+    </template>
 
     <script>
         /**
-         * `hdd-componente`
+         * `procesador-componente`
          * simulacion de computadora y sus componentes
          *
          * @customElement
@@ -25,11 +37,46 @@
             }
             static get properties() {
                 return {
-                    prop1: {
-                        type: String,
-                        value: 'hdd-componente'
+                    hdd: {
+                        type: Object,
+                        value: {},
+                        notify: true
+                    },
+                    estado: {
+                        type: Boolean,
+
+                    },
+                    listaHdds: {
+                        type: Array,
+                        value: []
                     }
+
                 };
+            }
+
+            actualizaHdd(e) {
+                console.log('Ow!');
+                console.log(e.model.item);
+                this.hdd = e.model.item
+                    // now you got args you can use them as you want
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+                this._getAPIInformation();
+            }
+
+            _getAPIInformation() {
+                let request = new XMLHttpRequest();
+                let url = "https://demo6292426.mockable.io/hddList";
+                request.open('GET', url);
+                request.send();
+                request.onreadystatechange = () => {
+                    if (request.readyState === 4) {
+                        console.log(JSON.parse(request.response));
+                        this.listaHdds = JSON.parse(request.response).data;
+                    }
+                }
             }
         }
 

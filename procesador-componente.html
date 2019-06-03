@@ -8,24 +8,17 @@
       }
     </style>
 
-<!-- <div>
-    <h3>Ram</h3>
-    <p>Nombre: {{ram.name}}</p>
-    <p>Arquitectura: {{ram.architecture}}</p>
-  </div> -->
 
   <template is="dom-if" if="[[!estado]]">
-      <h2>En este momento tu equipo esta apagado.</h2>
+      <h2>Puedes actulaizar tu procesador a los siguientes:</h2>
+      
       <template is="dom-repeat" items="{{listaProcesadores}}">
       
-          <p>Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </p>
+          <button  on-click="actualizaProcesador" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button>
+
         </template>
 
     </template>
-
-    <template is="dom-if" if="[[estado]]">
-        <h2>En este momento tu equipo esta apagado.</h2>
-      </template>
 
     </template>
 
@@ -61,11 +54,18 @@
                 };
             }
 
+            actualizaProcesador(e) {
+                console.log('Ow!');
+                console.log(e.model.item);
+                this.procesador = e.model.item
+                    // now you got args you can use them as you want
+            }
 
             connectedCallback() {
                 super.connectedCallback();
                 this._getAPIInformation();
             }
+
             _getAPIInformation() {
                 let request = new XMLHttpRequest();
                 let url = "http://demo6292426.mockable.io/processors";
