@@ -14,7 +14,7 @@
       
       <template is="dom-repeat" items="{{listagcs}}">
       
-          <button  on-click="actualizagc" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  } </button>
+          <button  on-click="actualizaGC" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  } </button>
 
         </template>
 
@@ -31,7 +31,7 @@
          * @polymer
          * @demo demo/index.html
          */
-        class GraphicCardComponente extends Polymer.Element {
+        class GCComponente extends Polymer.Element {
             static get is() {
                 return 'gc-componente';
             }
@@ -54,11 +54,11 @@
                 };
             }
 
-            actualizaTargetaGrafica(e) {
+            actualizaGC(e) {
                 console.log('Ow!');
                 console.log(e.model.item);
-                this.gc = e.model.item
-                    // now you got args you can use them as you want
+                this.gc = e.model.item;
+
             }
 
             connectedCallback() {
@@ -80,6 +80,6 @@
             }
         }
 
-        window.customElements.define(GraphicCardComponente.is, GraphicCardComponente);
+        window.customElements.define(GCComponente.is, GCComponente);
     </script>
 </dom-module>
