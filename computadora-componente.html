@@ -5,7 +5,6 @@
 <link rel="import" href="./hdd-componente.html">
 <link rel="import" href="./gc-componente.html">
 
-
 <link rel="import" href="../paper-button/paper-button.html">
 <!--Agregada-->
 <link rel="import" href="../paper-checkbox/paper-checkbox.html">
@@ -38,205 +37,110 @@
 
 <dom-module id="computadora-componente">
     <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
 
-    <paper-toolbar>
-        <span slot="top" class="title">Hola, bienvenido a tu equipo ACME-JOAZ!</span>
-    </paper-toolbar>
-
-    <custom-style>
-            <style is="custom-style">
-              paper-card.white {
-                --paper-card-header-color: #fff;
-              }
-            </style>
-          </custom-style>
-          
+        <paper-toolbar>
+            <span slot="top" class="title">Hola, bienvenido a tu equipo ACME-JOAZ!</span>
+        </paper-toolbar>
 
 
-    <paper-card heading="Contenido Actual"  alt="Emmental">
-        <div class="card-content">
-            <paper-toggle-button on-change="_handleClickOnOff"></paper-toggle-button>
-            
-            <template is="dom-if" if="[[estado]]">
-                    <h2>En este momento tu equipo esta Encendido.</h2>
-              
-                    <h2>Cuenta con las siguientes caracteristicas:</h2>
-              
-                    <div>
-                      <h3>Procesador:</h3>
-                      <p>Procesador: {{procesador.name}}</p>
-                      <p>Proveedor: {{procesador.provider}}</p>
-              
+        <paper-card heading="Contenido Actual" alt="Emmental">
+            <div class="card-content">
+                <paper-toggle-button on-change="_handleClickOnOff"></paper-toggle-button>
+
+
+                <template is="dom-if" if="[[estado]]">
+                    <h2>En este momento tu equipo esta Encendido!</h2>
+
+                    <div class="card-actions">
+
+
+                        <paper-icon-button id="iconRam" icon="hardware:developer-board" alt="Ram"></paper-icon-button>
+                        RAM
+                        <paper-tooltip for="iconRam" class="custom" animation-delay="0">
+                            <div>
+                                <h3>Ram</h3>
+                                <p>Nombre: {{ram.name}}</p>
+                                <p>Arquitectura: {{ram.architecture}}</p>
+                                <p>Capacidad: {{ram.ramMemory}}</p>
+                            </div>
+                        </paper-tooltip>
+
+                        <paper-icon-button id="iconProcesador" icon="hardware:memory" alt="Procesador">
+                        </paper-icon-button>Procesador
+                        <paper-tooltip for="iconProcesador" class="custom" animation-delay="0">
+                            <div>
+                                <h3>Procesador:</h3>
+                                <p>Procesador: {{procesador.name}}</p>
+                                <p>Proveedor: {{procesador.provider}}</p>
+
+                            </div>
+                        </paper-tooltip>
+
+                        <paper-icon-button id="iconGC" icon="maps:layers" alt="Tarjeta Grafica"></paper-icon-button>
+                        Tarjeta Grafica
+                        <paper-tooltip for="iconGC" class="custom" animation-delay="0">
+                            <div>
+                                <h3>Tarjeta Grafica</h3>
+                                <p>Nombre: {{gc.name}}</p>
+                                <p>Arquitectura: {{gc.architecture}}</p>
+                                <p>Ram: {{gc.ramMemory}}</p>
+                            </div>
+                        </paper-tooltip>
+
+                        <paper-icon-button id="iconHdd" icon="device:storage" alt="Disco Duro"></paper-icon-button>Disco
+                        Duro
+                        <paper-tooltip for="iconHdd" class="custom" animation-delay="0">
+                            <div>
+                                <h3>HDD</h3>
+                                <p>Proveedor: {{hdd.provider}}</p>
+                                <p>Tamaño: {{hdd.size}}</p>
+                                <p>Tamaño: {{hdd.speed}}</p>
+                            </div>
+                        </paper-tooltip>
+
                     </div>
-              
-                    <div>
-                      <h3>Ram</h3>
-                      <p>Nombre: {{ram.name}}</p>
-                      <p>Arquitectura: {{ram.architecture}}</p>
-                      <p>Capacidad: {{ram.ramMemory}}</p>
-                    </div>
-              
-              
-              
-                    <div>
-                      <h3>HDD</h3>
-                      <p>Proveedor: {{hdd.provider}}</p>
-                      <p>Tamaño: {{hdd.size}}</p>
-                      <p>Tamaño: {{hdd.speed}}</p>
-                    </div>
-              
-              
-                    <div>
-                      <h3>Tarjeta Grafica</h3>
-                      <p>Nombre: {{gc.name}}</p>
-                      <p>Arquitectura: {{gc.architecture}}</p>
-                      <p>Ram: {{gc.ramMemory}}</p>
-                    </div>
 
-                    
-              
-            </template>
+                </template>
+
+
 
     <template is="dom-if" if="[[!estado]]">
                     <h2>En este momento tu equipo esta Apagado.</h2>
-                    
-                    
-                  </template>
+                    <ram-componente ram="{{ram}}" estado="[[estado]]"></ram-componente>
+                    <procesador-componente procesador="{{procesador}}" estado="[[estado]]"></procesador-componente>
+                    <gc-componente gc="{{gc}}" estado="[[estado]]"></gc-componente>
+                    <hdd-componente hdd="{{hdd}}" estado="[[estado]]"></hdd-componente>
+                    <div class="card-actions">
+                        
+
+                        
+                        
+
+                        
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+                </template>
 
     </div>
-    <div class="card-actions">
-        <paper-button id="buttonRam" on-click="dialogCloseRam">
-            <iron-icon icon="hardware:developer-board"></iron-icon>Ram</paper-button>
-        <paper-button id="buttonProcesador" on-click="dialogCloseProcesador">
-            <iron-icon icon="hardware:memory"></iron-icon>Procesador</paper-button>
-        <paper-button id="buttonGC" on-click="dialogCloseGC">
-            <iron-icon icon="maps:layers"></iron-icon>Tarjeta Grafica</paper-button>
-        <paper-button id="buttonHdd" on-click="dialogCloseHdd">
-            <iron-icon icon="device:storage"></iron-icon>Disco duro</paper-button>
-    </div>
-    <div class="card-actions">
-        <iron-collapse id="collapseProcesador">
-            <paper-card heading="Procesador" alt="Emmental">
-                <div class="card-content">
 
-                    <paper-button>
-                        <iron-icon icon="hardware:memory"></iron-icon>Procesador</paper-button>
-                    <paper-button raised on-click="_dialogOpenProcesador">Detalles de Procesador</paper-button>
-
-                    <paper-dialog id="scrollingProcesador">
-                        <h2>Cambio de Procesador</h2>
-                        <paper-dialog-scrollable>
-                            <procesador-componente procesador="{{procesador}}" estado="[[estado]]"></procesador-componente>
-                        </paper-dialog-scrollable>
-                        <div class="buttons">
-                            <paper-button dialog-dismiss>Cancel</paper-button>
-                            <paper-button dialog-confirm autofocus>OK</paper-button>
-                        </div>
-                    </paper-dialog>
-                </div>
-
-            </paper-card>
-        </iron-collapse>
-
-        <iron-collapse id="collapseRam">
-            <paper-card heading="Ram" alt="Emmental">
-                <div class="card-content">
-
-                    <paper-button>
-                        <iron-icon icon="hardware:developer-board"></iron-icon>Ram</paper-button>
-                    <paper-button raised on-click="_dialogOpenRam">Detalles de Ram</paper-button>
-
-                    <paper-dialog id="scrollingRam">
-                        <h2>Cambio de memoria Ram</h2>
-                        <paper-dialog-scrollable>
-                            <ram-componente ram="{{ram}}" estado="[[estado]]"></ram-componente>
-                        </paper-dialog-scrollable>
-                        <div class="buttons">
-                            <paper-button dialog-dismiss>Cancel</paper-button>
-                            <paper-button dialog-confirm autofocus>OK</paper-button>
-                        </div>
-                    </paper-dialog>
-                </div>
-
-            </paper-card>
-
-        </iron-collapse>
-
-        <iron-collapse id="collapseGC">
-            <paper-card heading="Tarjeta Grafica" alt="Emmental">
-                <div class="card-content">
-
-                    <paper-button>
-                        <iron-icon icon="maps:layers"></iron-icon>Tarjeta Grafica</paper-button>
-                    <paper-button raised on-click="_dialogOpenGC">Detalles de Tarjeta Grafica</paper-button>
-
-                    <paper-dialog id="scrollingGC">
-                        <h2>Cambio de memoria Tarjeta Grafica</h2>
-                        <paper-dialog-scrollable>
-                            <gc-componente gc="{{gc}}" estado="[[estado]]"></gc-componente>
-                        </paper-dialog-scrollable>
-                        <div class="buttons">
-                            <paper-button dialog-dismiss>Cancel</paper-button>
-                            <paper-button dialog-confirm autofocus>OK</paper-button>
-                        </div>
-                    </paper-dialog>
-                </div>
-
-            </paper-card>
-
-        </iron-collapse>
-
-
-
-        <iron-collapse id="collapseHdd">
-            <paper-card heading="Disco duro" alt="Emmental">
-                <div class="card-content">
-
-                    <paper-button>
-                        <iron-icon icon="device:storage"></iron-icon>Disco Duro</paper-button>
-                    <paper-button raised on-click="_dialogOpenHdd">Detalles de Disco Duro</paper-button>
-
-                    <paper-dialog id="scrollingHdd">
-                        <h2>Cambio de memoria Ram</h2>
-                        <paper-dialog-scrollable>
-                            <hdd-componente hdd="{{hdd}}" estado="{{estado}}"></hdd-componente>
-                        </paper-dialog-scrollable>
-                        <div class="buttons">
-                            <paper-button dialog-dismiss>Cancel</paper-button>
-                            <paper-button dialog-confirm autofocus>OK</paper-button>
-                        </div>
-                    </paper-dialog>
-                </div>
-
-            </paper-card>
-        </iron-collapse>
-
-
-
-
-
-
-
-
-
-
-    </div>
 
     </paper-card>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -341,21 +245,13 @@
 
             }
 
-            _dialogOpenRam() {
-                this.shadowRoot.querySelector('#scrollingRam').open();
-            }
 
-            _dialogOpenProcesador() {
-                this.shadowRoot.querySelector('#scrollingProcesador').open();
-            }
 
-            _dialogOpenGC() {
-                this.shadowRoot.querySelector('#scrollingGC').open();
-            }
 
-            _dialogOpenHdd() {
-                this.shadowRoot.querySelector('#scrollingHdd').open();
-            }
+
+
+
+
 
             dialogCloseProcesador() {
                 let elementocolapso = this.shadowRoot.querySelector('#collapseProcesador');

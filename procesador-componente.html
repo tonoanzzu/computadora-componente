@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
 <!--Agregada-->
 
 <dom-module id="procesador-componente">
@@ -8,27 +9,59 @@
       :host {
         display: block;
       }
+      .tarjeta{
+          display: block;
+          width: 450px
+
+      }
     </style>
 
 
-  <template is="dom-if" if="[[!estado]]">
-      <h3>Puedes actulaizar tu procesador a los siguientes:</h3>
-      <paper-listbox> 
-          <template is="dom-repeat" items="{{listaProcesadores}}">
-          
-             <!-- <button class="paper-item" on-click="actualizaProcesador" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button>-->
-              <paper-item on-click="actualizaProcesador">
-                    <paper-item-body two-line>
-                      <div>Elemento [[index]]</div>
-                      <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
-                    </paper-item-body>
-                    <iron-icon icon="warning"></iron-icon>
-                  </paper-item>
-            </template>
-
+<template is="dom-if" if="[[!estado]]">
+      
+        <paper-card heading="Procesadores" alt="Emmental">
+          <div class="card-content tarjeta">
+            <paper-button>
+              <iron-icon icon="hardware:developer-board"></iron-icon>Procesadores
+            </paper-button>
+            <paper-button raised on-click="_dialogOpenProcesador">Detalles de Procesadores
+            </paper-button>
+  
+          <paper-dialog id="scrollingProcesador">
+              <h2>Cambio de Procesador</h2>
+              <paper-dialog-scrollable>
+                  <paper-listbox> 
+                      <template is="dom-repeat" items="{{listaProcesadores}}">
+                  
+                          <paper-item on-click="actualizaProcesador">
+                                  <paper-item-body two-line>
+                                  <div>Elemento [[index]]</div>
+                                  <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
+                                  
+                                  </paper-item-body>
+                                  <iron-icon icon="warning"></iron-icon>
+                          </paper-item>
+                          
+                      </template>
     </paper-listbox>
+    </paper-dialog-scrollable>
+    <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus>OK</paper-button>
+    </div>
+    </paper-dialog>
+    </div>
+
+    </paper-card>
 
     </template>
+
+
+
+
+
+
+
 
     </template>
 
@@ -85,6 +118,10 @@
                         this.listaProcesadores = JSON.parse(request.response).data;
                     }
                 }
+            }
+
+            _dialogOpenProcesador() {
+                this.shadowRoot.querySelector('#scrollingProcesador').open();
             }
         }
 

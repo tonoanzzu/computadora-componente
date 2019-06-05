@@ -1,32 +1,58 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
-
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<!--Agregada-->
 <dom-module id="ram-componente">
     <template>
     <style>
       :host {
         display: block;
       }
+      .tarjeta{
+          display: block;
+          width: 450px
+
+      }
     </style>
 
-
   <template is="dom-if" if="[[!estado]]">
-      <h2>Puedes actulaizar tu Ram a los siguientes:</h2>
-      <paper-listbox> 
-      <template is="dom-repeat" items="{{listaRams}}">
+      
+      <paper-card heading="Ram" alt="Emmental">
+        <div class="card-content tarjeta">
+          <paper-button>
+            <iron-icon icon="hardware:developer-board"></iron-icon>Ram
+          </paper-button>
+          <paper-button raised on-click="_dialogOpenRam">Detalles de Ram
+          </paper-button>
 
-            <paper-item on-click="actualizaRam">
-                    <paper-item-body two-line>
-                      <div>Elemento [[index]]</div>
-                      <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
-                    </paper-item-body>
-                    <iron-icon icon="warning"></iron-icon>
-            </paper-item>
-            
-          <!-- <button  on-click="actualizaRam" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button> -->
-
-        </template>
+        <paper-dialog id="scrollingRam">
+            <h2>Cambio de memoria Ram</h2>
+            <paper-dialog-scrollable>
+                <paper-listbox> 
+                    <template is="dom-repeat" items="{{listaRams}}">
+                
+                        <paper-item on-click="actualizaRam">
+                                <paper-item-body two-line>
+                                <div>Elemento [[index]]</div>
+                                <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
+                                
+                                </paper-item-body>
+                                <iron-icon icon="warning"></iron-icon>
+                        </paper-item>
+                                    
+                                <!-- <button  on-click="actualizaRam" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button> -->
+                        
+                    </template>
     </paper-listbox>
+    </paper-dialog-scrollable>
+    <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus>OK</paper-button>
+    </div>
+    </paper-dialog>
+    </div>
+
+    </paper-card>
 
     </template>
 
@@ -85,6 +111,10 @@
                         this.listaRams = JSON.parse(request.response).data;
                     }
                 }
+            }
+
+            _dialogOpenRam() {
+                this.shadowRoot.querySelector('#scrollingRam').open();
             }
         }
 

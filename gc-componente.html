@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
 
 <dom-module id="gc-componente">
     <template>
@@ -7,24 +8,57 @@
       :host {
         display: block;
       }
+      .tarjeta{
+          display: block;
+          width: 450px
+
+      }
     </style>
 
 
-  <template is="dom-if" if="[[!estado]]">
-      <h2>Puedes actulaizar tu Tarjeta Grafica a los siguientes:</h2>
-      <paper-listbox> 
-      <template is="dom-repeat" items="{{listagcs}}">
-          
-          <paper-item on-click="actualizaGC">
-                <paper-item-body two-line>
-                  <div>Elemento [[index]]</div>
-                  <div secondary> { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  }</div>
-                </paper-item-body>
-                <iron-icon icon="warning"></iron-icon>
-              </paper-item>
-        </template>
+
+<template is="dom-if" if="[[!estado]]">
+      
+        <paper-card heading="Tarjeta Grafica" alt="Emmental">
+          <div class="card-content tarjeta">
+            <paper-button>
+              <iron-icon icon="hardware:developer-board"></iron-icon>Tarjeta Grafica
+            </paper-button>
+            <paper-button raised on-click="_dialogOpenGC">Detalles de Tarjeta Grafica
+            </paper-button>
+  
+          <paper-dialog id="scrollingGC">
+              <h2>Cambio de tarjeta Grafica</h2>
+              <paper-dialog-scrollable>
+                  <paper-listbox> 
+                      <template is="dom-repeat" items="{{listaGCs}}">
+                  
+                            <paper-item on-click="actualizaGC">
+                                    <paper-item-body two-line>
+                                      <div>Elemento [[index]]</div>
+                                      <div secondary> { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  }</div>
+                                    </paper-item-body>
+                                    <iron-icon icon="warning"></iron-icon>
+                            </paper-item>
+                                      
+                                  <!-- <button  on-click="actualizaRam" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button> -->
+                          
+                      </template>
+    </paper-listbox>
+    </paper-dialog-scrollable>
+    <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus>OK</paper-button>
+    </div>
+    </paper-dialog>
+    </div>
+
+    </paper-card>
 
     </template>
+
+
+
 
     </template>
 
@@ -83,6 +117,10 @@
                         this.listagcs = JSON.parse(request.response).data;
                     }
                 }
+            }
+
+            _dialogOpenGC() {
+                this.shadowRoot.querySelector('#scrollingGC').open();
             }
         }
 
