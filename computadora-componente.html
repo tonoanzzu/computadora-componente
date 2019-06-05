@@ -47,17 +47,14 @@
             <span slot="top" class="title">Hola, bienvenido a tu equipo ACME-JOAZ!</span>
         </paper-toolbar>
 
-
-        <paper-card heading="Contenido Actual" alt="Emmental">
+        <paper-card heading="" alt="Emmental">
             <div class="card-content">
                 <paper-toggle-button on-change="_handleClickOnOff"></paper-toggle-button>
-
 
                 <template is="dom-if" if="[[estado]]">
                     <h2>En este momento tu equipo esta Encendido!</h2>
 
                     <div class="card-actions">
-
 
                         <paper-icon-button id="iconRam" icon="hardware:developer-board" alt="Ram"></paper-icon-button>
                         RAM
@@ -77,7 +74,6 @@
                                 <h3>Procesador:</h3>
                                 <p>Procesador: {{procesador.name}}</p>
                                 <p>Proveedor: {{procesador.provider}}</p>
-
                             </div>
                         </paper-tooltip>
 
@@ -102,12 +98,8 @@
                                 <p>Tamaño: {{hdd.speed}}</p>
                             </div>
                         </paper-tooltip>
-
                     </div>
-
                 </template>
-
-
 
     <template is="dom-if" if="[[!estado]]">
                     <h2>En este momento tu equipo esta Apagado.</h2>
@@ -116,22 +108,6 @@
                     <gc-componente gc="{{gc}}" estado="[[estado]]"></gc-componente>
                     <hdd-componente hdd="{{hdd}}" estado="[[estado]]"></hdd-componente>
                     <div class="card-actions">
-                        
-
-                        
-                        
-
-                        
-
-
-
-
-
-
-
-
-
-
                     </div>
 
 

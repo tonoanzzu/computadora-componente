@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
-<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 <!--Agregada-->
 
 <dom-module id="procesador-componente">
@@ -21,9 +21,11 @@
       
         <paper-card heading="Procesadores" alt="Emmental">
           <div class="card-content tarjeta">
+            <p>Ultima seleccion: [[seleccionado]]</p>
             <paper-button>
-              <iron-icon icon="hardware:developer-board"></iron-icon>Procesadores
+              <iron-icon icon="hardware:memory"></iron-icon>Procesadores
             </paper-button>
+
             <paper-button raised on-click="_dialogOpenProcesador">Detalles de Procesadores
             </paper-button>
   
@@ -66,14 +68,6 @@
     </template>
 
     <script>
-        /**
-         * `procesador-componente`
-         * simulacion de computadora y sus componentes
-         *
-         * @customElement
-         * @polymer
-         * @demo demo/index.html
-         */
         class ProcesadorComponente extends Polymer.Element {
             static get is() {
                 return 'procesador-componente';
@@ -92,6 +86,10 @@
                     listaProcesadores: {
                         type: Array,
                         value: []
+                    },
+                    seleccionado: {
+                        type: String,
+                        value: "No seleccionaste ninguno",
                     }
 
                 };
@@ -99,7 +97,9 @@
 
             actualizaProcesador(e) {
                 this.procesador = e.model.item;
-                // now you got args you can use them as you want
+                console.log(e.model.item.name)
+                    //seleccionado =
+
             }
 
             connectedCallback() {

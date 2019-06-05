@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
-<link rel="import" href="../paper-dialog/paper-dialog.html">
+<link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 
 <dom-module id="hdd-componente">
     <template>
@@ -21,7 +21,7 @@
         <paper-card heading="HDD" alt="Emmental">
                 <div class="card-content tarjeta">
                   <paper-button>
-                    <iron-icon icon="hardware:developer-board"></iron-icon>HDD
+                    <iron-icon icon="device:storage"></iron-icon>HDD
                   </paper-button>
                   <paper-button raised on-click="_dialogOpenHdd">Detalles de HDD
                   </paper-button>
@@ -67,14 +67,6 @@
 
 
         <script>
-            /**
-             * `procesador-componente`
-             * simulacion de computadora y sus componentes
-             *
-             * @customElement
-             * @polymer
-             * @demo demo/index.html
-             */
             class HddComponente extends Polymer.Element {
                 static get is() {
                     return 'hdd-componente';
@@ -93,6 +85,10 @@
                         listaHdds: {
                             type: Array,
                             value: []
+                        },
+                        seleccionado: {
+                            type: String,
+                            value: "No seleccionaste ninguno",
                         }
 
                     };
@@ -100,7 +96,7 @@
 
                 actualizaHdd(e) {
                     this.hdd = e.model.item;
-                    // now you got args you can use them as you want
+
                 }
 
                 connectedCallback() {
