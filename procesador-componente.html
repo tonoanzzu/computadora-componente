@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<!--Agregada-->
 
 <dom-module id="procesador-componente">
     <template>
@@ -10,13 +12,21 @@
 
 
   <template is="dom-if" if="[[!estado]]">
-      <h2>Puedes actulaizar tu procesador a los siguientes:</h2>
-      
-      <template is="dom-repeat" items="{{listaProcesadores}}">
-      
-          <button  on-click="actualizaProcesador" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button>
+      <h3>Puedes actulaizar tu procesador a los siguientes:</h3>
+      <paper-listbox> 
+          <template is="dom-repeat" items="{{listaProcesadores}}">
+          
+             <!-- <button class="paper-item" on-click="actualizaProcesador" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button>-->
+              <paper-item on-click="actualizaProcesador">
+                    <paper-item-body two-line>
+                      <div>Elemento [[index]]</div>
+                      <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
+                    </paper-item-body>
+                    <iron-icon icon="warning"></iron-icon>
+                  </paper-item>
+            </template>
 
-        </template>
+    </paper-listbox>
 
     </template>
 
@@ -55,10 +65,8 @@
             }
 
             actualizaProcesador(e) {
-                console.log('Ow!');
-                console.log(e.model.item);
-                this.procesador = e.model.item
-                    // now you got args you can use them as you want
+                this.procesador = e.model.item;
+                // now you got args you can use them as you want
             }
 
             connectedCallback() {

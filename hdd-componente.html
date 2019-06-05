@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
 
 <dom-module id="hdd-componente">
     <template>
@@ -11,12 +12,22 @@
 
   <template is="dom-if" if="[[!estado]]">
       <h2>Puedes actulaizar tu Hdd a los siguientes:</h2>
-      
+      <paper-listbox> 
       <template is="dom-repeat" items="{{listaHdds}}">
       
-          <button  on-click="actualizaHdd" data-args="[[index]]" >Elemento [[index]]: { Proveedor: [[item.provider]] , Tamaño: [[item.size]]  , Velocidad: [[item.size]] } </button>
+          
 
+          <paper-item on-click="actualizaHdd">
+                <paper-item-body two-line>
+                  <div>Elemento [[index]]</div>
+                  <div secondary>{ Proveedor: [[item.provider]] , Tamaño: [[item.size]]  , Velocidad: [[item.size]] }</div>
+                </paper-item-body>
+                <iron-icon icon="warning"></iron-icon>
+              </paper-item>
         </template>
+
+    </template>
+
 
     </template>
 
@@ -55,10 +66,8 @@
             }
 
             actualizaHdd(e) {
-                console.log('Ow!');
-                console.log(e.model.item);
-                this.hdd = e.model.item
-                    // now you got args you can use them as you want
+                this.hdd = e.model.item;
+                // now you got args you can use them as you want
             }
 
             connectedCallback() {

@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
 
 <dom-module id="gc-componente">
     <template>
@@ -11,12 +12,19 @@
 
   <template is="dom-if" if="[[!estado]]">
       <h2>Puedes actulaizar tu Tarjeta Grafica a los siguientes:</h2>
-      
+      <paper-listbox> 
       <template is="dom-repeat" items="{{listagcs}}">
-      
-          <button  on-click="actualizaGC" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  } </button>
-
+          
+          <paper-item on-click="actualizaGC">
+                <paper-item-body two-line>
+                  <div>Elemento [[index]]</div>
+                  <div secondary> { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  }</div>
+                </paper-item-body>
+                <iron-icon icon="warning"></iron-icon>
+              </paper-item>
         </template>
+
+    </template>
 
     </template>
 
@@ -55,8 +63,6 @@
             }
 
             actualizaGC(e) {
-                console.log('Ow!');
-                console.log(e.model.item);
                 this.gc = e.model.item;
 
             }
