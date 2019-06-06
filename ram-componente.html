@@ -10,7 +10,7 @@
       }
       .tarjeta{
           display: block;
-          width: 450px
+          width: 450px;
 
       }
     </style>
@@ -29,26 +29,23 @@
         <paper-dialog id="scrollingRam">
             <h2>Cambio de memoria Ram</h2>
             <paper-dialog-scrollable>
-                <paper-listbox> 
+                <paper-listbox id="listaderams" > 
                     <template is="dom-repeat" items="{{listaRams}}">
-                
-                        <paper-item on-click="actualizaRam">
+                        <paper-item on-click="_selectedChanged">
                                 <paper-item-body two-line>
                                 <div>Elemento [[index]]</div>
                                 <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
                                 
                                 </paper-item-body>
-                                <iron-icon icon="warning"></iron-icon>
+                                
                         </paper-item>
-                                    
-                                <!-- <button  on-click="actualizaRam" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button> -->
-                        
+
                     </template>
     </paper-listbox>
     </paper-dialog-scrollable>
     <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus>OK</paper-button>
+        <paper-button dialog-dismiss>Cancelar</paper-button>
+        <paper-button on-click="actualizaRam" dialog-confirm autofocus>Actualizar</paper-button>
     </div>
     </paper-dialog>
     </div>
@@ -79,7 +76,10 @@
                         type: Array,
                         value: []
                     },
-
+                    itemSeleccionado: {
+                        type: Object,
+                        value: '_selectedChanged'
+                    },
                     seleccionado: {
                         type: String,
                         value: "No seleccionaste ninguno",
@@ -88,9 +88,13 @@
                 };
             }
 
-            actualizaRam(e) {
-                this.ram = e.model.item;
-
+            actualizaRam() {
+                if (Object.entries(this.itemSeleccionado).length === 0 && this.itemSeleccionado.constructor === Object) {
+                    this.seleccionado = "No seleccionaste ninguno";
+                } else {
+                    this.seleccionado = this.itemSeleccionado.ramMemory;
+                    this.ram = this.itemSeleccionado;
+                }
             }
 
             connectedCallback() {
@@ -99,7 +103,7 @@
             }
 
             _getAPIInformation() {
-                let request = new XMLHttpRequest();
+                /* let request = new XMLHttpRequest();
                 let url = "http://demo6292426.mockable.io/ramMemory";
                 request.open('GET', url);
                 request.send();
@@ -108,11 +112,134 @@
                         console.log(JSON.parse(request.response));
                         this.listaRams = JSON.parse(request.response).data;
                     }
-                }
+                } */
+
+                this.listaRams = [{
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "4GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-1"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "8GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-2"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "16GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "4GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "32GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "4GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "32GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "4GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-1"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "4GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-2"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "32GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "4GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "12GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "32GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }, {
+                    "speed": "1600Mhz",
+                    "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
+                    "price": "2441.74",
+                    "architecture": "gigabite-GFT",
+                    "ramMemory": "4GB",
+                    "serial": 377,
+                    "name": "ram-gigabite-377-Simple-GFT-patito-3"
+                }]
+
             }
 
             _dialogOpenRam() {
+                this.itemSeleccionado = {};
+                this.seleccionado = "No seleccionaste ninguno";
                 this.shadowRoot.querySelector('#scrollingRam').open();
+            }
+
+            _selectedChanged(newValue, oldValue) {
+
+                this.itemSeleccionado = newValue.model.item;
+                //e.model.item //se deja referencia para uso con e.model
             }
         }
 

@@ -10,119 +10,246 @@
       }
       .tarjeta{
           display: block;
-          width: 450px
-
+          width: 450px;
       }
     </style>
-
-
-  <template is="dom-if" if="[[!estado]]">
+    <template is="dom-if" if="[[!estado]]">
     
-        <paper-card heading="HDD" alt="Emmental">
-                <div class="card-content tarjeta">
-                        <p>Ultima seleccion: [[seleccionado]]</p>
-                  <paper-button>
-                    <iron-icon icon="device:storage"></iron-icon>HDD
-                  </paper-button>
-                  <paper-button raised on-click="_dialogOpenHdd">Detalles de HDD
-                  </paper-button>
-        
-                <paper-dialog id="scrollingHdd">
-                    <h2>Cambio de HDD</h2>
-                    <paper-dialog-scrollable>
-                        <paper-listbox> 
-                            <template is="dom-repeat" items="{{listaHdds}}">
-                        
-                                    <paper-item-body two-line>
-                                            <div>Elemento [[index]]</div>
-                                            <div secondary>{ Proveedor: [[item.provider]] , Tamaño: [[item.size]]  , Velocidad: [[item.size]] }</div>
-                                          </paper-item-body>
-                                          <iron-icon icon="warning"></iron-icon>
-                                        </paper-item>
-                                            
-                                        <!-- <button  on-click="actualizaRam" data-args="[[index]]" >Elemento [[index]]: { Nombre: [[item.name]], Proveedor: [[item.provider]]  } </button> -->
+    <paper-card heading="HDD" alt="Emmental">
+        <div class="card-content tarjeta">
+            <p>Ultima seleccion: [[seleccionado]]</p>
+            <paper-button>
+            <iron-icon icon="device:storage"></iron-icon>HDD
+            </paper-button>
+            <paper-button raised on-click="_dialogOpenHdd">Detalles de HDD
+            </paper-button>
+
+            <paper-dialog id="scrollingHdd">
+                <h2>Cambio de HDD</h2>
+                <paper-dialog-scrollable>
+                    <paper-listbox> 
+                        <template is="dom-repeat" items="{{listaHdds}}">
+                            <paper-item  on-click="_selectedChanged">
+                            <paper-item-body  two-line>
+                                <div>Elemento [[index]]</div>
+                                <div secondary>{ Proveedor: [[item.provider]] , Tamaño: [[item.size]]  , Velocidad: [[item.size]] }</div>
+                            </paper-item-body>
+                        </paper-item>
                                 
-                            </template>
+                        </template>
     </paper-listbox>
     </paper-dialog-scrollable>
     <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus>OK</paper-button>
+        <paper-button dialog-dismiss>Cancelar</paper-button>
+        <paper-button on-click="actualizaHdd" dialog-confirm autofocus>Actualizar</paper-button>
     </div>
     </paper-dialog>
     </div>
 
     </paper-card>
 
+    </template>
 
+    </template>
 
+    <script>
+        class HddComponente extends Polymer.Element {
+            static get is() {
+                return 'hdd-componente';
+            }
+            static get properties() {
+                return {
+                    hdd: {
+                        type: Object,
+                        value: {},
+                        notify: true
+                    },
+                    estado: {
+                        type: Boolean,
 
-    <paper-listbox>
-
-
-        </template>
-
-
-        </template>
-
-
-
-        <script>
-            class HddComponente extends Polymer.Element {
-                static get is() {
-                    return 'hdd-componente';
-                }
-                static get properties() {
-                    return {
-                        hdd: {
-                            type: Object,
-                            value: {},
-                            notify: true
-                        },
-                        estado: {
-                            type: Boolean,
-
-                        },
-                        listaHdds: {
-                            type: Array,
-                            value: []
-                        },
-                        seleccionado: {
-                            type: String,
-                            value: "No seleccionaste ninguno",
-                        }
-
-                    };
-                }
-
-                actualizaHdd(e) {
-                    this.hdd = e.model.item;
-
-                }
-
-                connectedCallback() {
-                    super.connectedCallback();
-                    this._getAPIInformation();
-                }
-
-                _getAPIInformation() {
-                    let request = new XMLHttpRequest();
-                    let url = "https://demo6292426.mockable.io/hddList";
-                    request.open('GET', url);
-                    request.send();
-                    request.onreadystatechange = () => {
-                        if (request.readyState === 4) {
-                            console.log(JSON.parse(request.response));
-                            this.listaHdds = JSON.parse(request.response).data;
-                        }
+                    },
+                    listaHdds: {
+                        type: Array,
+                        value: []
+                    },
+                    itemSeleccionado: {
+                        type: Object,
+                        value: '_selectedChanged'
+                    },
+                    seleccionado: {
+                        type: String,
+                        value: "No seleccionaste ninguno",
                     }
-                }
 
-                _dialogOpenHdd() {
-                    this.shadowRoot.querySelector('#scrollingHdd').open();
-                }
+                };
             }
 
-            window.customElements.define(HddComponente.is, HddComponente);
-        </script>
+            actualizaHdd() {
+                //this.hdd = e.model.item;
+                //this.seleccionado = e.model.item.size;
+
+                if (Object.entries(this.itemSeleccionado).length === 0 && this.itemSeleccionado.constructor === Object) {
+                    this.seleccionado = "No seleccionaste ninguno"
+                } else {
+                    this.seleccionado = this.itemSeleccionado.provider
+                    this.hdd = this.itemSeleccionado
+                }
+
+            }
+
+            connectedCallback() {
+                super.connectedCallback();
+                this._getAPIInformation();
+            }
+
+            _getAPIInformation() {
+                /* let request = new XMLHttpRequest();
+                let url = "https://demo6292426.mockable.io/hddList";
+                request.open('GET', url);
+                request.send();
+                request.onreadystatechange = () => {
+                    if (request.readyState === 4) {
+                        console.log(JSON.parse(request.response));
+                        this.listaHdds = JSON.parse(request.response).data;
+                    }
+                } */
+                this.listaHdds = [{
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-1",
+                    "serial": 3231
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-2",
+                    "serial": 3232
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-3",
+                    "serial": 3233
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-1",
+                    "serial": 3231
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-2",
+                    "serial": 3232
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-3",
+                    "serial": 3233
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-1",
+                    "serial": 3231
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-2",
+                    "serial": 3232
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-3",
+                    "serial": 3233
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-1",
+                    "serial": 3231
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-2",
+                    "serial": 3232
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-3",
+                    "serial": 3233
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-1",
+                    "serial": 3231
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-2",
+                    "serial": 3232
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-3",
+                    "serial": 3233
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-2",
+                    "serial": 3232
+                }, {
+                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                    "size": "256GB",
+                    "price": "3615.35",
+                    "speed": "ssd",
+                    "provider": "seagate-GFT-patito-3",
+                    "serial": 3233
+                }];
+
+            }
+
+            _dialogOpenHdd() {
+                this.itemSeleccionado = {}
+                this.seleccionado = "No seleccionaste ninguno"
+                this.shadowRoot.querySelector('#scrollingHdd').open();
+            }
+
+            _selectedChanged(newValue, oldValue) {
+
+                this.itemSeleccionado = newValue.model.item;
+                console.log(this.itemSeleccionado)
+                    //e.model.item //se deja referencia para uso con e.model
+            }
+        }
+
+        window.customElements.define(HddComponente.is, HddComponente);
+    </script>
 </dom-module>

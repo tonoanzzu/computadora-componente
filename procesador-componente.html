@@ -2,7 +2,6 @@
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
 <!--Agregada-->
-
 <dom-module id="procesador-componente">
     <template>
     <style>
@@ -11,12 +10,9 @@
       }
       .tarjeta{
           display: block;
-          width: 450px
-
+          width: 450px;
       }
     </style>
-
-
 <template is="dom-if" if="[[!estado]]">
       
         <paper-card heading="Procesadores" alt="Emmental">
@@ -25,31 +21,26 @@
             <paper-button>
               <iron-icon icon="hardware:memory"></iron-icon>Procesadores
             </paper-button>
-
             <paper-button raised on-click="_dialogOpenProcesador">Detalles de Procesadores
             </paper-button>
-  
           <paper-dialog id="scrollingProcesador">
               <h2>Cambio de Procesador</h2>
               <paper-dialog-scrollable>
                   <paper-listbox> 
                       <template is="dom-repeat" items="{{listaProcesadores}}">
-                  
-                          <paper-item on-click="actualizaProcesador">
-                                  <paper-item-body two-line>
+                          <paper-item  on-click="_selectedChanged">
+                          <paper-item-body two-line>
                                   <div>Elemento [[index]]</div>
                                   <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
-                                  
                                   </paper-item-body>
-                                  <iron-icon icon="warning"></iron-icon>
                           </paper-item>
                           
                       </template>
     </paper-listbox>
     </paper-dialog-scrollable>
     <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus>OK</paper-button>
+        <paper-button dialog-dismiss>Cancelar</paper-button>
+        <paper-button on-click="actualizaProcesador" dialog-confirm autofocus>Actualizar</paper-button>
     </div>
     </paper-dialog>
     </div>
@@ -57,13 +48,6 @@
     </paper-card>
 
     </template>
-
-
-
-
-
-
-
 
     </template>
 
@@ -87,6 +71,10 @@
                         type: Array,
                         value: []
                     },
+                    itemSeleccionado: {
+                        type: Object,
+                        value: '_selectedChanged'
+                    },
                     seleccionado: {
                         type: String,
                         value: "No seleccionaste ninguno",
@@ -95,10 +83,16 @@
                 };
             }
 
-            actualizaProcesador(e) {
-                this.procesador = e.model.item;
-                console.log(e.model.item.name)
-                    //seleccionado =
+            actualizaProcesador() {
+                //this.procesador = e.model.item;
+                //this.seleccionado = e.model.item.provider;
+
+                if (Object.entries(this.itemSeleccionado).length === 0 && this.itemSeleccionado.constructor === Object) {
+                    this.seleccionado = "No seleccionaste ninguno"
+                } else {
+                    this.seleccionado = this.itemSeleccionado.name
+                    this.procesador = this.itemSeleccionado
+                }
 
             }
 
@@ -108,7 +102,7 @@
             }
 
             _getAPIInformation() {
-                let request = new XMLHttpRequest();
+                /* let request = new XMLHttpRequest();
                 let url = "http://demo6292426.mockable.io/processors";
                 request.open('GET', url);
                 request.send();
@@ -117,11 +111,174 @@
                         console.log(JSON.parse(request.response));
                         this.listaProcesadores = JSON.parse(request.response).data;
                     }
-                }
+                } */
+
+                this.listaProcesadores = [{
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-1",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-1"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-2",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-2"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-3",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-3"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-1",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-1"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-2",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-2"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-3",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-3"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-1",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-1"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-2",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-2"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-3",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-3"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-1",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-1"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-2",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-2"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-3",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-3"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-1",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-1"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-2",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-2"
+                }, {
+                    "overclock": false,
+                    "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
+                    "cores": 4,
+                    "price": "4337.79",
+                    "architecture": "32bit",
+                    "provider": "intel-GFT-PATITO-3",
+                    "ramMaxMemory": "126GB",
+                    "serial": 3789,
+                    "name": "core-amd-3789-ryzen-GFT-PATITO-3"
+                }]
+
+
             }
 
             _dialogOpenProcesador() {
+                this.itemSeleccionado = {}
+                this.seleccionado = "No seleccionaste ninguno"
                 this.shadowRoot.querySelector('#scrollingProcesador').open();
+            }
+
+            _selectedChanged(newValue, oldValue) {
+
+                this.itemSeleccionado = newValue.model.item;
+                console.log(this.itemSeleccionado)
+                    //e.model.item //se deja referencia para uso con e.model
             }
         }
 

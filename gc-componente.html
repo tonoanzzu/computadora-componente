@@ -10,12 +10,10 @@
       }
       .tarjeta{
           display: block;
-          width: 450px
+          width: 450px;
 
       }
     </style>
-
-
 
 <template is="dom-if" if="[[!estado]]">
       
@@ -34,7 +32,7 @@
                   <paper-listbox> 
                       <template is="dom-repeat" items="{{listaGCs}}">
                   
-                            <paper-item on-click="actualizaGC">
+                            <paper-item on-click="_selectedChanged">
                                     <paper-item-body two-line>
                                       <div>Elemento [[index]]</div>
                                       <div secondary> { Nombre: [[item.name]], Arquitectura: [[item.architecture]]  }</div>
@@ -48,8 +46,8 @@
     </paper-listbox>
     </paper-dialog-scrollable>
     <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus>OK</paper-button>
+        <paper-button dialog-dismiss>Cancelar</paper-button>
+        <paper-button on-click="actualizaGC" dialog-confirm autofocus>Actualizar</paper-button>
     </div>
     </paper-dialog>
     </div>
@@ -57,9 +55,6 @@
     </paper-card>
 
     </template>
-
-
-
 
     </template>
 
@@ -81,7 +76,7 @@
                         type: Boolean,
 
                     },
-                    listagcs: {
+                    listaGCs: {
                         type: Array,
                         value: []
                     },
@@ -93,8 +88,15 @@
                 };
             }
 
-            actualizaGC(e) {
-                this.gc = e.model.item;
+            actualizaGC() {
+                if (Object.entries(this.itemSeleccionado).length === 0 && this.itemSeleccionado.constructor === Object) {
+                    this.seleccionado = "No seleccionaste ninguno"
+                } else {
+                    this.seleccionado = this.itemSeleccionado.name
+                    this.gc = this.itemSeleccionado
+                }
+
+
 
             }
 
@@ -104,7 +106,7 @@
             }
 
             _getAPIInformation() {
-                let request = new XMLHttpRequest();
+                /* let request = new XMLHttpRequest();
                 let url = "http://demo6292426.mockable.io/graphicCard";
                 request.open('GET', url);
                 request.send();
@@ -113,11 +115,164 @@
                         console.log(JSON.parse(request.response));
                         this.listagcs = JSON.parse(request.response).data;
                     }
-                }
+                } */
+                this.listaGCs = [{
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-1",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-1"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-2",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-2"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-3",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-3"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-1",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-1"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-2",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-2"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-3",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-3"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-1",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-1"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-2",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-2"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-3",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-3"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-1",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-1"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-2",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-2"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-3",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-3"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-1",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-1"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-2",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-2"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-3",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-3"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-1",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-1"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-2",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-2"
+                }, {
+                    "overclock": true,
+                    "releaseDate": "Fri Jan 23 2004 03:09:46 GMT+0000 (UTC)",
+                    "price": "3966.13",
+                    "architecture": "nvidia-GFT-PATITO-3",
+                    "ramMemory": "16GB",
+                    "serial": 1057,
+                    "name": "card-nvidia-1057-GFT-PATITO-3"
+                }]
             }
 
             _dialogOpenGC() {
+                this.itemSeleccionado = {}
+                this.seleccionado = "No seleccionaste ninguno"
                 this.shadowRoot.querySelector('#scrollingGC').open();
+            }
+
+            _selectedChanged(newValue, oldValue) {
+
+                this.itemSeleccionado = newValue.model.item;
+                //e.model.item //se deja referencia para uso con e.model
             }
         }
 
