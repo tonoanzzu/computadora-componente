@@ -21,21 +21,20 @@
 
 <dom-module id="computadora-componente">
     <template>
-        <style>
-            :host {
-                display: block;
-            }
-        </style>
+      <style>
+        :host {
+            display: block;
+        }
+      </style>
 
-        <paper-toolbar>
-            <span slot="top" class="title">Hola, bienvenido a tu equipo ACME-JOAZ!</span>
-        </paper-toolbar>
+      <paper-toolbar>
+        <span slot="top" class="title">Hola, bienvenido a tu equipo ACME-JOAZ!</span>
+      </paper-toolbar>
 
-        <paper-card heading="" alt="Emmental">
-            <div class="card-content">
-                <paper-toggle-button on-change="_handleClickOnOff"></paper-toggle-button>
-
-                <iron-collapse id="collapseEncendido">
+      <paper-card heading="" alt="Emmental">
+        <div class="card-content">
+          <paper-toggle-button on-change="_handleClickOnOff"></paper-toggle-button>
+            <iron-collapse id="collapseEncendido">
                         
                     <h2>En este momento tu equipo esta Encendido!</h2>
 

@@ -84,14 +84,12 @@
             }
 
             actualizaProcesador() {
-                //this.procesador = e.model.item;
-                //this.seleccionado = e.model.item.provider;
 
                 if (Object.entries(this.itemSeleccionado).length === 0 && this.itemSeleccionado.constructor === Object) {
-                    this.seleccionado = "No seleccionaste ninguno"
+                    this.seleccionado = "No seleccionaste ninguno";
                 } else {
-                    this.seleccionado = this.itemSeleccionado.name
-                    this.procesador = this.itemSeleccionado
+                    this.seleccionado = this.itemSeleccionado.name;
+                    this.procesador = this.itemSeleccionado;
                 }
 
             }
@@ -269,16 +267,16 @@
             }
 
             _dialogOpenProcesador() {
-                this.itemSeleccionado = {}
-                this.seleccionado = "No seleccionaste ninguno"
+                this.itemSeleccionado = {};
+                this.seleccionado = "No seleccionaste ninguno";
                 this.shadowRoot.querySelector('#scrollingProcesador').open();
             }
 
             _selectedChanged(newValue, oldValue) {
 
                 this.itemSeleccionado = newValue.model.item;
-                console.log(this.itemSeleccionado)
-                    //e.model.item //se deja referencia para uso con e.model
+
+                //e.model.item //se deja referencia para uso con e.model
             }
         }
 
