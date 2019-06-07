@@ -21,92 +21,113 @@
 
 <dom-module id="computadora-componente">
     <template>
-      <style>
-        :host {
-            display: block;
-        }
-      </style>
+    <style>
+      :host {
+        display: block;
+      }
+      body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      }
+      .paper-card {
+        display: block;
+      }
+    </style>
 
-      <paper-toolbar>
-        <span slot="top" class="title">Hola, bienvenido a tu equipo ACME-JOAZ!</span>
-      </paper-toolbar>
+    <paper-toolbar>
+      <span slot="top" class="title">Hola, bienvenido a tu equipo ACME-JOAZ!</span>
+    </paper-toolbar>
 
-      <paper-card heading="" alt="Emmental">
+    <paper-card class="paper-card">
         <div class="card-content">
-          <paper-toggle-button on-change="_handleClickOnOff"></paper-toggle-button>
-            <iron-collapse id="collapseEncendido">
-                        
-                    <h2>En este momento tu equipo esta Encendido!</h2>
+            <paper-toggle-button on-change="_handleClickOnOff"></paper-toggle-button>
+            <template is="dom-if" if="[[estado]]">
+          <h2>En este momento tu equipo esta Encendido!</h2>
+        </template>
+    <template is="dom-if" if="[[!estado]]">
+          <h2>En este momento tu equipo esta Apagado.</h2>
+        </template>
+    </div>
+    <div class="card-actions">
+        <iron-collapse id="collapseEncendido">
+            <paper-button id="iconRam">
+                <paper-icon-button icon="hardware:developer-board" alt="Ram"></paper-icon-button>
+            </paper-button>
+            <paper-tooltip for="iconRam" class="custom" animation-delay="0">
+                <div>
+                    <h3>Ram</h3>
+                    <p>Nombre: {{ram.name}}</p>
+                    <p>Arquitectura: {{ram.architecture}}</p>
+                    <p>Capacidad: {{ram.ramMemory}}</p>
+                </div>
+            </paper-tooltip>
 
-                    <div class="card-actions">
+            <paper-button id="iconProcesador">
+                <paper-icon-button icon="hardware:memory" alt="Ram"></paper-icon-button>
+            </paper-button>
+            <paper-tooltip for="iconProcesador" class="custom" animation-delay="0">
+                <div>
+                    <h3>Procesador:</h3>
+                    <p>Procesador: {{procesador.name}}</p>
+                    <p>Proveedor: {{procesador.provider}}</p>
+                </div>
+            </paper-tooltip>
 
-                        <paper-icon-button id="iconRam" icon="hardware:developer-board" alt="Ram"></paper-icon-button>
-                        RAM
-                        <paper-tooltip for="iconRam" class="custom" animation-delay="0">
-                            <div>
-                                <h3>Ram</h3>
-                                <p>Nombre: {{ram.name}}</p>
-                                <p>Arquitectura: {{ram.architecture}}</p>
-                                <p>Capacidad: {{ram.ramMemory}}</p>
-                            </div>
-                        </paper-tooltip>
-            
-                        <paper-icon-button id="iconProcesador" icon="hardware:memory" alt="Procesador">
-                        </paper-icon-button>Procesador
-                        <paper-tooltip for="iconProcesador" class="custom" animation-delay="0">
-                            <div>
-                                <h3>Procesador:</h3>
-                                <p>Procesador: {{procesador.name}}</p>
-                                <p>Proveedor: {{procesador.provider}}</p>
-                            </div>
-                        </paper-tooltip>
-            
-                        <paper-icon-button id="iconGC" icon="maps:layers" alt="Tarjeta Grafica"></paper-icon-button>
-                        Tarjeta Grafica
-                        <paper-tooltip for="iconGC" class="custom" animation-delay="0">
-                            <div>
-                                <h3>Tarjeta Grafica</h3>
-                                <p>Nombre: {{gc.name}}</p>
-                                <p>Arquitectura: {{gc.architecture}}</p>
-                                <p>Ram: {{gc.ramMemory}}</p>
-                            </div>
-                        </paper-tooltip>
-            
-                        <paper-icon-button id="iconHdd" icon="device:storage" alt="Disco Duro"></paper-icon-button>Disco
-                        Duro
-                        <paper-tooltip for="iconHdd" class="custom" animation-delay="0">
-                            <div>
-                                <h3>HDD</h3>
-                                <p>Proveedor: {{hdd.provider}}</p>
-                                <p>Tamaño: {{hdd.size}}</p>
-                                <p>Tamaño: {{hdd.speed}}</p>
-                            </div>
-                        </paper-tooltip>
-                    </div>
 
-                </iron-collapse>
+            <paper-button id="iconGC">
+                <paper-icon-button icon="maps:layers"></paper-icon-button>
+            </paper-button>
+            <paper-tooltip for="iconGC" class="custom" animation-delay="0">
+                <div>
+                    <h3>Tarjeta Grafica</h3>
+                    <p>Nombre: {{gc.name}}</p>
+                    <p>Arquitectura: {{gc.architecture}}</p>
+                    <p>Ram: {{gc.ramMemory}}</p>
+                </div>
+            </paper-tooltip>
 
-                <iron-collapse id="collapseApagado">
-                        
-                    <h2>En este momento tu equipo esta Apagado.</h2>
-                    <ram-componente ram="{{ram}}" estado="[[estado]]"></ram-componente>
-                    <procesador-componente procesador="{{procesador}}" estado="[[estado]]"></procesador-componente>
-                    <gc-componente gc="{{gc}}" estado="[[estado]]"></gc-componente>
-                    <hdd-componente hdd="{{hdd}}" estado="[[estado]]"></hdd-componente>
-                    <div class="card-actions">
-                    </div>
-                
-                </iron-collapse>
-    
+
+            <paper-button id="iconHdd">
+                <paper-icon-button icon="device:storage"></paper-icon-button>
+            </paper-button>
+
+
+            <paper-tooltip for="iconHdd" class="custom" animation-delay="0">
+                <div>
+                    <h3>HDD</h3>
+                    <p>Proveedor: {{hdd.provider}}</p>
+                    <p>Tamaño: {{hdd.size}}</p>
+                    <p>Tamaño: {{hdd.speed}}</p>
+                </div>
+            </paper-tooltip>
+
+
+        </iron-collapse>
     </div>
 
+    <iron-collapse id="collapseApagado">
+
+        <div class="card-actions">
+            <ram-componente ram="{{ram}}" estado="[[estado]]"></ram-componente>
+        </div>
+        <div class="card-actions"></div>
+
+        <div class="card-actions">
+            <procesador-componente procesador="{{procesador}}" estado="[[estado]]"></procesador-componente>
+        </div>
+        <div class="card-actions">
+            <gc-componente gc="{{gc}}" estado="[[estado]]"></gc-componente>
+        </div>
+        <div class="card-actions">
+            <hdd-componente hdd="{{hdd}}" estado="[[estado]]"></hdd-componente>
+        </div>
+
+    </iron-collapse>
 
     </paper-card>
 
-
-
     </template>
-
 
     <script>
         /**

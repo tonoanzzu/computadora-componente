@@ -10,32 +10,31 @@
       }
       .tarjeta{
           display: block;
-          width: 450px;
+      }
+      .paper-card {
+        display: block;
       }
     </style>
 <template is="dom-if" if="[[!estado]]">
       
-        <paper-card heading="Procesadores" alt="Emmental">
-          <div class="card-content tarjeta">
-            <p>Ultima seleccion: [[seleccionado]]</p>
-            <paper-button>
-              <iron-icon icon="hardware:memory"></iron-icon>Procesadores
-            </paper-button>
+        <paper-card class="paper-card" >
+          <div class="card-content" align = "center">
+            <span>[[seleccionado]]</span>
             <paper-button raised on-click="_dialogOpenProcesador">Detalles de Procesadores
             </paper-button>
+          </div>
           <paper-dialog id="scrollingProcesador">
               <h2>Cambio de Procesador</h2>
               <paper-dialog-scrollable>
                   <paper-listbox> 
-                      <template is="dom-repeat" items="{{listaProcesadores}}">
-                          <paper-item  on-click="_selectedChanged">
-                          <paper-item-body two-line>
-                                  <div>Elemento [[index]]</div>
-                                  <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
-                                  </paper-item-body>
-                          </paper-item>
-                          
-                      </template>
+                    <template is="dom-repeat" items="{{listaProcesadores}}">
+                        <paper-item  on-click="_selectedChanged">
+                        <paper-item-body two-line>
+                        <div>Elemento [[index]]</div>
+                        <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
+                        </paper-item-body>
+                        </paper-item>
+                    </template>
     </paper-listbox>
     </paper-dialog-scrollable>
     <div class="buttons">
@@ -43,8 +42,6 @@
         <paper-button on-click="actualizaProcesador" dialog-confirm autofocus>Actualizar</paper-button>
     </div>
     </paper-dialog>
-    </div>
-
     </paper-card>
 
     </template>
@@ -77,7 +74,7 @@
                     },
                     seleccionado: {
                         type: String,
-                        value: "No seleccionaste ninguno",
+                        value: "",
                     }
 
                 };
@@ -100,7 +97,7 @@
             }
 
             _getAPIInformation() {
-                /* let request = new XMLHttpRequest();
+                let request = new XMLHttpRequest();
                 let url = "http://demo6292426.mockable.io/processors";
                 request.open('GET', url);
                 request.send();
@@ -109,9 +106,9 @@
                         console.log(JSON.parse(request.response));
                         this.listaProcesadores = JSON.parse(request.response).data;
                     }
-                } */
+                }
 
-                this.listaProcesadores = [{
+                /* this.listaProcesadores = [{
                     "overclock": false,
                     "releaseDate": "Fri Aug 07 1981 21:21:18 GMT+0000 (UTC)",
                     "cores": 4,
@@ -261,7 +258,7 @@
                     "ramMaxMemory": "126GB",
                     "serial": 3789,
                     "name": "core-amd-3789-ryzen-GFT-PATITO-3"
-                }]
+                }] */
 
 
             }

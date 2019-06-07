@@ -1,7 +1,7 @@
 <link rel="import" href="../polymer/polymer-element.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-dialog-scrollable/paper-dialog-scrollable.html">
-<!--Agregada-->
+
 <dom-module id="ram-componente">
     <template>
     <style>
@@ -9,38 +9,32 @@
         display: block;
       }
       .tarjeta{
-          display: block;
-          width: 450px;
-
+        display: block;
+      }
+      .paper-card {
+        display: block;
       }
     </style>
-
-  <template is="dom-if" if="[[!estado]]">
-      
-      <paper-card heading="Ram" alt="Emmental">
-        <div class="card-content tarjeta">
-        <p>Ultima seleccion: [[seleccionado]]</p>
-          <paper-button>
-            <iron-icon icon="hardware:developer-board"></iron-icon>Ram
-          </paper-button>
+    <template is="dom-if" if="[[!estado]]">
+        
+      <paper-card class="paper-card">
+        <div class="card-content " align = "center">
+          <span>[[seleccionado]]</span>
           <paper-button raised on-click="_dialogOpenRam">Detalles de Ram
           </paper-button>
-
-        <paper-dialog id="scrollingRam">
+        </div>
+          <paper-dialog id="scrollingRam">
             <h2>Cambio de memoria Ram</h2>
-            <paper-dialog-scrollable>
+              <paper-dialog-scrollable>
                 <paper-listbox id="listaderams" > 
-                    <template is="dom-repeat" items="{{listaRams}}">
-                        <paper-item on-click="_selectedChanged">
-                                <paper-item-body two-line>
-                                <div>Elemento [[index]]</div>
-                                <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
-                                
-                                </paper-item-body>
-                                
-                        </paper-item>
-
-                    </template>
+                  <template is="dom-repeat" items="{{listaRams}}">
+                    <paper-item on-click="_selectedChanged">
+                      <paper-item-body two-line>
+                        <div>Elemento [[index]]</div>
+                        <div secondary>{ Nombre: [[item.name]], Proveedor: [[item.provider]]  }</div>
+                      </paper-item-body>
+                    </paper-item>
+                  </template>
     </paper-listbox>
     </paper-dialog-scrollable>
     <div class="buttons">
@@ -49,12 +43,12 @@
     </div>
     </paper-dialog>
     </div>
-
     </paper-card>
 
     </template>
 
     </template>
+
 
     <script>
         class RamComponente extends Polymer.Element {
@@ -82,7 +76,7 @@
                     },
                     seleccionado: {
                         type: String,
-                        value: "No seleccionaste ninguno",
+                        value: "",
                     }
 
                 };
@@ -103,7 +97,7 @@
             }
 
             _getAPIInformation() {
-                /* let request = new XMLHttpRequest();
+                let request = new XMLHttpRequest();
                 let url = "http://demo6292426.mockable.io/ramMemory";
                 request.open('GET', url);
                 request.send();
@@ -112,9 +106,9 @@
                         console.log(JSON.parse(request.response));
                         this.listaRams = JSON.parse(request.response).data;
                     }
-                } */
+                }
 
-                this.listaRams = [{
+                /* this.listaRams = [{
                     "speed": "1600Mhz",
                     "releaseDate": "Mon Feb 06 1978 13:48:04 GMT+0000 (UTC)",
                     "price": "2441.74",
@@ -226,7 +220,7 @@
                     "ramMemory": "4GB",
                     "serial": 377,
                     "name": "ram-gigabite-377-Simple-GFT-patito-3"
-                }]
+                }] */
 
             }
 

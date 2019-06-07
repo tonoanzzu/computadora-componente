@@ -10,20 +10,19 @@
       }
       .tarjeta{
           display: block;
-          width: 450px;
+      }
+      .paper-card {
+        display: block;
       }
     </style>
     <template is="dom-if" if="[[!estado]]">
     
-    <paper-card heading="HDD" alt="Emmental">
-        <div class="card-content tarjeta">
-            <p>Ultima seleccion: [[seleccionado]]</p>
-            <paper-button>
-            <iron-icon icon="device:storage"></iron-icon>HDD
-            </paper-button>
+    <paper-card class="paper-card">
+        <div class="card-content" align = "center">
+                <span>[[seleccionado]]</span>
             <paper-button raised on-click="_dialogOpenHdd">Detalles de HDD
             </paper-button>
-
+        </div>
             <paper-dialog id="scrollingHdd">
                 <h2>Cambio de HDD</h2>
                 <paper-dialog-scrollable>
@@ -35,8 +34,7 @@
                                 <div secondary>{ Proveedor: [[item.provider]] , Tamaño: [[item.size]]  , Velocidad: [[item.size]] }</div>
                             </paper-item-body>
                         </paper-item>
-                                
-                        </template>
+                    </template>
     </paper-listbox>
     </paper-dialog-scrollable>
     <div class="buttons">
@@ -78,7 +76,7 @@
                     },
                     seleccionado: {
                         type: String,
-                        value: "No seleccionaste ninguno",
+                        value: "",
                     }
 
                 };
@@ -103,136 +101,136 @@
             }
 
             _getAPIInformation() {
-                /* let request = new XMLHttpRequest();
+                let request = new XMLHttpRequest();
                 let url = "https://demo6292426.mockable.io/hddList";
                 request.open('GET', url);
                 request.send();
                 request.onreadystatechange = () => {
-                    if (request.readyState === 4) {
-                        console.log(JSON.parse(request.response));
-                        this.listaHdds = JSON.parse(request.response).data;
+                        if (request.readyState === 4) {
+                            console.log(JSON.parse(request.response));
+                            this.listaHdds = JSON.parse(request.response).data;
+                        }
                     }
-                } */
-                this.listaHdds = [{
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-1",
-                    "serial": 3231
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-2",
-                    "serial": 3232
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-3",
-                    "serial": 3233
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-1",
-                    "serial": 3231
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-2",
-                    "serial": 3232
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-3",
-                    "serial": 3233
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-1",
-                    "serial": 3231
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-2",
-                    "serial": 3232
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-3",
-                    "serial": 3233
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-1",
-                    "serial": 3231
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-2",
-                    "serial": 3232
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-3",
-                    "serial": 3233
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-1",
-                    "serial": 3231
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-2",
-                    "serial": 3232
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-3",
-                    "serial": 3233
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-2",
-                    "serial": 3232
-                }, {
-                    "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
-                    "size": "256GB",
-                    "price": "3615.35",
-                    "speed": "ssd",
-                    "provider": "seagate-GFT-patito-3",
-                    "serial": 3233
-                }];
+                    /* this.listaHdds = [{
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-1",
+                        "serial": 3231
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-2",
+                        "serial": 3232
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-3",
+                        "serial": 3233
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-1",
+                        "serial": 3231
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-2",
+                        "serial": 3232
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-3",
+                        "serial": 3233
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-1",
+                        "serial": 3231
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-2",
+                        "serial": 3232
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-3",
+                        "serial": 3233
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-1",
+                        "serial": 3231
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-2",
+                        "serial": 3232
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-3",
+                        "serial": 3233
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-1",
+                        "serial": 3231
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-2",
+                        "serial": 3232
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-3",
+                        "serial": 3233
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-2",
+                        "serial": 3232
+                    }, {
+                        "releaseDate": "Sun Sep 29 2013 16:58:13 GMT+0000 (UTC)",
+                        "size": "256GB",
+                        "price": "3615.35",
+                        "speed": "ssd",
+                        "provider": "seagate-GFT-patito-3",
+                        "serial": 3233
+                    }]; */
 
             }
 
